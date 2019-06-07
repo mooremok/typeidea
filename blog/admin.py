@@ -25,7 +25,7 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'status', 'created_time', 'operator')
+    list_display = ('title', 'category', 'status', 'created_time', 'operator', 'owner')
     list_display_links = []
 
     list_filter = ('category', )
