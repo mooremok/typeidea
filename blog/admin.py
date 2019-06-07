@@ -7,7 +7,7 @@ from . models import Post, Tag, Category
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('name', 'status', 'is_nav', 'created_time','owner')
-    fields = ('name', 'status', 'is_nav', 'owner')
+    fields = ('name', 'status', 'is_nav')
 
     #增加save_model方法，自动判断当前登陆的账号，用当前账号保存数据
     def save_model(self, request, obj, form, change):
@@ -17,7 +17,7 @@ class CategoryAdmin(admin.ModelAdmin):
 @admin.register(Tag)
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'status', 'created_time', 'owner')
-    fields = ('name', 'status', 'owner')
+    fields = ('name', 'status')
 
     def save_model(self, request, obj, form, change):
         obj.owner = request.user

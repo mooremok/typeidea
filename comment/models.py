@@ -15,7 +15,7 @@ class Comment(models.Model):
     website = models.URLField('网站')
     email = models.EmailField('邮箱')
     status = models.PositiveIntegerField('状态', choices=STATUS_ITEMS, default=STATUS_NORMAL)
-    created_tiem = models.DateTimeField('创建时间', auto_now_add=True)
+    created_time = models.DateTimeField('创建时间', auto_now_add=True)
 
     class Meta:
         verbose_name = verbose_name_plural = '评论'
