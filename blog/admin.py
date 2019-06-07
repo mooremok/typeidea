@@ -23,12 +23,29 @@ class TagAdmin(admin.ModelAdmin):
         obj.owner = request.user
         return super(TagAdmin, self).save_model(request, obj, form, change)
 
+#自定义Post过滤器，代码必须位于PostAdmin上方
+class CategoryOwnerFilter(admin.SimpleListFilter):
+    """
+    过滤器只展示当前帐户分类
+    """
+    title = '分类过滤器'
+    parameter_name = 'owner_category'
+
+    def lookups(self, request, model_admin):
+        return Category.objects.filter(owner=request.user).values_list('id', 'name')
+    
+    def queryset(self, request, queryset):
+        category_id = self.value()
+        if category_id:
+            return queryset.filter(category_id=self.value())
+        return queryset
+
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'category', 'status', 'created_time', 'operator', 'owner')
     list_display_links = []
 
-    list_filter = ('category', )
+    list_filter = [CategoryOwnerFilter]
     search_fields = ('title', 'category_name')
 
     actions_on_top = True
