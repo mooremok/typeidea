@@ -53,13 +53,33 @@ class PostAdmin(admin.ModelAdmin):
 
     #编辑页面
     save_on_top = True
-
+    """
     fields = (
         ('category', 'title'),
         'decs',
         'status',
         'content',
         'tag',
+    )
+    """
+    fieldsets = (
+        ('基础配置', {
+            'description': '基础配置描述',
+            'fields': (
+                ('title', 'category'),
+                'status',
+            ),
+        }),
+        ('内容', {
+            'fields': (
+                'decs',
+                'content',
+            ),
+        }),
+        ('额外信息', {
+            'classes': ('collapse'),
+            'fields': ('tag', )
+        })
     )
 
     def operator(self, obj):
@@ -69,3 +89,7 @@ class PostAdmin(admin.ModelAdmin):
     def save_model(self, request, obj, form, change):
         obj.owner = request.user
         return super(PostAdmin, self).save_model(request, obj, form, change)
+
+    def get_queryset(self, request):
+        qs = super(PostAdmin, self).get_queryset(request)
+        return qs.filter(owner=request.user)
