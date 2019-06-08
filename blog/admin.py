@@ -2,6 +2,8 @@ from django.contrib import admin
 from django.urls import reverse
 from django.utils.html import format_html
 from . models import Post, Tag, Category
+
+from .adminform import PostAdminForm
 # Register your models here.
 
 @admin.register(Category)
@@ -42,6 +44,11 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
+    """
+    使用ModelForm重构desc使之变成textarea
+    """
+    form = PostAdminForm
+
     list_display = ('title', 'category', 'status', 'created_time', 'operator', 'owner')
     list_display_links = []
 
