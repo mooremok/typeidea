@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from . models import Blog, Category, Tag
+from . models import Post, Category, Tag
 # Create your views here.
 
 def post_list(reqeust, category_id=None, tag_id=None):
