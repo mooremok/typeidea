@@ -1,0 +1,14 @@
+<ul>
+    {% for post in post_list %}
+    <li>
+        <a href="/post/{{ post.id }}.html">{{ post.title }}</a>
+        <div>
+            <span>作者：{{ post.owner.username }}</span>
+            <span>分类：{{ post.category.name }}</span>
+        </div>
+        <p>{{ post.decs }}</p>
+    </li>
+    {% empty %}
+    暂无数据
+    {% endfor %}
+</ul>

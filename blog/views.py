@@ -2,11 +2,11 @@ from django.shortcuts import render
 from . models import Post, Category, Tag
 # Create your views here.
 
-def post_list(reqeust, category_id=None, tag_id=None):
+def post_list(request, category_id=None, tag_id=None):
     if tag_id:
         try:
             tag = Tag.objects.get(id=tag_id)
-        except Tag.DoseNotExist:
+        except Tag.DoesNotExist:
             post_list = []
         else:
             post_list = tag.post_set.filter(status=Post.STATUS_NORMAL)
@@ -17,13 +17,12 @@ def post_list(reqeust, category_id=None, tag_id=None):
     context = {
         'post_list':post_list,
     }
-
     return render(request, 'blog/list.html', context)
 
 def post_detail(request, post_id=None):
     try:
         post = Post.objects.get(id=post_id)
-    except Post.DoseNotExist:
+    except Post.DoesNotExist:
         post = None
     
     context = {
