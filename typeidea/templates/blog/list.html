@@ -1,3 +1,9 @@
+<div>
+    {% for cate in navs %}
+    <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
+    {% endfor %}
+</div>
+<hr>
 <ul>
     {% for post in post_list %}
     <li>
@@ -11,4 +17,13 @@
     {% empty %}
     暂无数据
     {% endfor %}
+
 </ul>
+<hr>
+<div>
+    {% for cate in categories %}
+    <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
+    {% empty %}
+    暂无底部分类
+    {% endfor %}
+</div>
