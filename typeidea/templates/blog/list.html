@@ -27,3 +27,10 @@
     暂无底部分类
     {% endfor %}
 </div>
+<div>
+    侧边栏：
+    {% for sidebar in sidebars %}
+    {{ sidebar.title }}
+    {{ sidebar.content }}
+    {% endfor %}
+</div>
