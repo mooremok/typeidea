@@ -19,9 +19,9 @@ from blog.views import post_list, post_detail
 #from config.views import links
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', post_list),
-    path('category/<category_id>/', post_list),
-    path('tag/<tag_id>/', post_list),
-    path('post/<post_id>.html/', post_detail),
+    path('', post_list, name='index'),
+    path('category/<category_id>/', post_list, name='category_list'),
+    path('tag/<tag_id>/', post_list, name='tag_list'),
+    path('post/<post_id>.html/', post_detail, name='post_detail'),
     #path('links/', links),
 ]

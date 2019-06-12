@@ -1,13 +1,9 @@
-<div>
-    {% for cate in navs %}
-    <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
-    {% endfor %}
-</div>
-<hr>
+{% extends "../base.html" %}
+{% block main %}
 <ul>
     {% for post in post_list %}
     <li>
-        <a href="/post/{{ post.id }}.html">{{ post.title }}</a>
+        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
         <div>
             <span>作者：{{ post.owner.username }}</span>
             <span>分类：{{ post.category.name }}</span>
@@ -17,20 +13,5 @@
     {% empty %}
     暂无数据
     {% endfor %}
-
 </ul>
-<hr>
-<div>
-    {% for cate in categories %}
-    <a href="/category/{{ cate.id }}/">{{ cate.name }}</a>
-    {% empty %}
-    暂无底部分类
-    {% endfor %}
-</div>
-<div>
-    侧边栏：
-    {% for sidebar in sidebars %}
-    {{ sidebar.title }}
-    {{ sidebar.content_html }}
-    {% endfor %}
-</div>
+{% endblock %}
