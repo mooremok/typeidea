@@ -76,6 +76,9 @@ class Post(models.Model):
     tag = models.ManyToManyField(Tag, verbose_name='标签')
     owner = models.ForeignKey(User, verbose_name='作者', on_delete=models.CASCADE)
     created_time = models.DateTimeField('创建时间', auto_now_add=True)
+    #增加pv和uv，为sidebar提供封装支持
+    pv = models.PositiveIntegerField(default=1)
+    uv = models.PositiveIntegerField(default=1)
 
     class Meta:
         verbose_name = verbose_name_plural = '文章'
@@ -83,6 +86,11 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+    
+    #封装最热文章，用only接口优化，只取title和id
+    @classmethod
+    def hot_posts(cls):
+        return cls.objects.filter(stauts=cls.STATUS_NORMAL).only('title', 'id').order_by('-pv')
     
     #视图部分函数抽象至model层
     @staticmethod
