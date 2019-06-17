@@ -4,34 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <title>{% block title %}{% endblock %}</title>
+    <style>
+        .post{
+            margin-bottom: 5px
+        }
+    </style>
 </head>
 <body>    
-    
-    <div>
-        <a href="{% url 'index' %}">首页</a>    
-        顶部分类：
-        {% for cate in navs %}
-        <a href="{% url 'category_list' cate.id %}">{{ cate.name }}</a>
-        {% endfor %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'index' %}">首页</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% for cate in navs %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category_list' cate.id %}">{{ cate.name }}</a>
+                </li>
+                {% endfor %}
+            </ul>
+            <ul>
+                <form class="form-inline my-2 my-lg-0" action=".">
+                    <input class="form-control mr-sm-2" type="search" placeholder="输入关键词" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">搜索</button>
+                </form>
+            </ul>
+        </div> 
+    </nav>
+    <div class="jumbotron">
+        <h1 class="display-4">锅大虾的自学中心</h1>
+        <p class="lead">基于django2.2搭建的博客系统</p>
     </div>
-
-    {% block main %}
-    {% endblock %}
-
-    <hr>
-    <div>底部分类
-        {% for cate in categories %}
-        <a href="{% url 'category_list' cate.id %}">{{ cate.name }}</a>        
-        {% endfor %}
+    <div class="container main">
+        <div class="row">
+            <div class="col-9 post-list">
+                    {% block main %}
+                    {% endblock %}     
+            </div>
+            <div class="col-3">
+                {% block sidebar %}
+                    {% for sidebar in sidebars %}
+                    <div class="card sidebar">
+                        <div class="card-body">
+                            <h4>{{ sidebar.title }}</h4>
+                            <p>{{ sidebar.content_html }}</p>
+                        </div>
+                    </div>
+                    {% empty %}
+                    暂无信息
+                    {% endfor %}
+                {% endblock %}
+            </div>
+        </div>
     </div>
-
-    <hr>
-    <div>侧边栏：
-        {% for sidebar in sidebars %}
-        {{ sidebar.title }}
-        {{ sidebar.content_html }}
-        {% endfor %}
-    </div>
+    <footer class="footer">
+        {% block footer%}
+        <div class="container">
+            <hr>
+            <nav class="nav category">
+                {% for cate in categories %}
+                <a href="{% url 'category_list' cate.id %}" class="nav-link">{{ cate.name }}</a>
+                {% endfor %}
+            </nav>
+        </div>
+        {% endblock %}
+    </footer>
 </body>
 </html>

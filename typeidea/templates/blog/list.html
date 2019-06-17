@@ -10,29 +10,23 @@
     {% endif %}
 {% endblock %}
 {% block main %}
-<ul>
-    {% for post in post_list %}
-    <li>
-        <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
-        <div>
-            <span>作者：{{ post.owner.username }}</span>
-            <span>分类：{{ post.category.name }}</span>
-            <span>标签：{{ post.tag.name }}</span>
-        </div>
-        <p>{{ post.decs }}</p>
-    </li>
-    {% empty %}
-    暂无数据
-    {% endfor %}
-</ul>
-
+{% for post in post_list %}
+<div class="card post">                    
+    <div class="card-body">
+        <h5 class="card-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <span class="card-link">作者：{{ post.owner.username }}</span>
+        <span class="card-link">分类：{{ post.category.name }}</span>
+        <span class="card-link">标签：{{ post.tag.name }}</span>  
+    </div>                
+</div>
+{% endfor %}
 {% if page_obj %}
-    {% if page_obj.has_previous %}
-        <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
-    {% endif %}
-    第{{ page_obj.number }}页，共{{ paginator.num_pages }}页
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
-    {% endif %}
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+{% endif %}
+第{{ page_obj.number }}页，共{{ paginator.num_pages }}页
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+{% endif %}
 {% endif %}
 {% endblock %}

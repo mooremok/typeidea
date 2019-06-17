@@ -14,7 +14,7 @@ class CommonViewMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'sidebar': SideBar.get_all(),
+            'sidebars': SideBar.get_all(),
         })
         context.update(Category.get_navs())
         return context
