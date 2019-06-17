@@ -6,6 +6,10 @@ from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
+"""
+抽象sidebar.get_all() & Category.get_navs()
+override get_context_data()
+"""
 class CommonViewMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -17,7 +21,7 @@ class CommonViewMixin:
 
 class IndexView(CommonViewMixin, ListView):
     queryset = Post.latest_posts()
-    paginator_by = 5
+    paginate_by = 5
     context_object_name = 'post_list'
     template_name = 'blog/list.html'
 
