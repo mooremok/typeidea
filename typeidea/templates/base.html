@@ -10,6 +10,14 @@
         .post{
             margin-bottom: 5px
         }
+        .blockquote{
+            padding: 2px 10px;
+            margin: 0 0 20px;
+            font-size: 14px;
+            border-left: 5px solid #009A61;
+            background: #F6F6F6;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -61,16 +69,20 @@
         </div>
     </div>
     <footer class="footer">
-        {% block footer%}
+        {% block footer%}        
         <div class="container">
             <hr>
-            <nav class="nav category">
+            <nav class="nav category">                
                 {% for cate in categories %}
                 <a href="{% url 'category_list' cate.id %}" class="nav-link">{{ cate.name }}</a>
-                {% endfor %}
+                {% endfor %}                           
             </nav>
+            <hr>
+            <nav style="text-align: center">
+                <a href="{% url 'links'%}">友情链接</a>
+            </nav>            
         </div>
-        {% endblock %}
+        {% endblock %}        
     </footer>
 </body>
 </html>

@@ -5,6 +5,9 @@ from config.models import SideBar
 from django.views.generic import ListView, DetailView
 from django.shortcuts import get_object_or_404
 
+from comment.forms import CommentForm
+from comment.models import Comment
+
 # Create your views here.
 
 """
@@ -64,6 +67,14 @@ class PostDetailView(CommonViewMixin, DetailView):
     context_boject_name = 'post'
     pk_url_kwarg = 'post_id'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({
+            'comment_form': CommentForm,
+            'comment_list': Comment.get_by_target(self.request.path),
+        })
+        return context
+
 #增加搜索功能
 class SearchView(IndexView):
     def get_context_data(self):
@@ -79,6 +90,13 @@ class SearchView(IndexView):
         if not keyword:
             return queryset
         return queryset.filter(Q(title__icontains=keyword) | Q(decs__icontains=keyword) | Q(content__icontains=keyword))
+
+#增加根据作者过滤文章的功能
+class AuthorView(IndexView):
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        author_id = self.kwargs.get('owner_id')
+        return queryset.filter(owner_id=author_id)
 
 """
 def post_list(request, category_id=None, tag_id=None):

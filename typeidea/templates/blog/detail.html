@@ -3,10 +3,37 @@
 {% if post %}
     <h1>{{ post.title }}</h1>
     <div>
-        <span>分类：{{ post.category.name }}</span>
-        <span>作者：{{ post.owner.username }}</span>
+        <span class="card-link">作者：<a href="{% url 'author' post.owner.id %}">{{ post.owner.username }}</a></span>
+        <span class="card-link">分类：<a href="{% url 'category_list' post.category.id %}">{{ post.category.name }}</a></span>
     </div>
     <hr>
+    <blockquote class="blockquote">
+        摘要：{{ post.decs }}
+    </blockquote>
     <p>{{ post.content }}</p>
 {% endif %}
+<p style="text-align: center">请评论一波</p>
+<div class="commnet">
+    <form action="/comment/" method="POST" class="form-group">
+        {% csrf_token %}
+        <input type="hidden" name="target" value="{{ request.path }}">
+        {{ comment_form }}
+        <button type="submit" class="btn btn-block btn-outline-success" style="margin-top: 10px">提交</button>
+    </form>
+
+    <!-- 评论列表 -->
+    <ul class="list-group">
+        {% for comment in comment_list %}
+        <li class="list-group-item">
+            <div class="nickname">
+                <a href="{{ comment.website }}">{{ comment.nickname }}</a>
+                <span>{{ comment.created_time }}</span>
+            </div>
+            <div class="comment-content">
+                {{ comment.content }}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}
