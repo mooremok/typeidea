@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import render
 from . models import Post, Category, Tag
 from config.models import SideBar
@@ -62,6 +63,23 @@ class PostDetailView(CommonViewMixin, DetailView):
     template_name = 'blog/detail.html'
     context_boject_name = 'post'
     pk_url_kwarg = 'post_id'
+
+#增加搜索功能
+class SearchView(IndexView):
+    def get_context_data(self):
+        context = super().get_context_data()
+        context.update({
+            'keyword': self.request.GET.get('keyword', '')            
+        })
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        keyword = self.request.GET.get('keyword')
+        if not keyword:
+            return queryset
+        return queryset.filter(Q(title__icontains=keyword) | Q(decs__icontains=keyword) | Q(content__icontains=keyword))
+
 """
 def post_list(request, category_id=None, tag_id=None):
     tag = None

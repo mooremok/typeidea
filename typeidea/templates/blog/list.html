@@ -14,6 +14,9 @@
 <div class="card post">                    
     <div class="card-body">
         <h5 class="card-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <div>
+            <p style="color: gray">摘要：{{ post.decs }}...<a href="{% url 'post_detail' post.id %}">阅读全文</a></p>
+        </div>
         <span class="card-link">作者：{{ post.owner.username }}</span>
         <span class="card-link">分类：{{ post.category.name }}</span>
         <span class="card-link">标签：{{ post.tag.name }}</span>  
