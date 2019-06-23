@@ -33,8 +33,8 @@ class CommentForm(forms.ModelForm):
     
     def clean_content(self):
         content = self.cleaned_data.get('content')
-        if len(content) < 10:
-            raise forms.ValidationError('再多一点内容')
+        if len(content) < 2:
+            raise forms.ValidationError('再少也要2个字呀')
         return content
     
     class Meta:

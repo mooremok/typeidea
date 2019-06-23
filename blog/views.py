@@ -8,8 +8,6 @@ from django.shortcuts import get_object_or_404
 from comment.forms import CommentForm
 from comment.models import Comment
 
-# Create your views here.
-
 """
 抽象sidebar.get_all() & Category.get_navs()
 override get_context_data()
@@ -67,6 +65,8 @@ class PostDetailView(CommonViewMixin, DetailView):
     context_boject_name = 'post'
     pk_url_kwarg = 'post_id'
 
+    """
+    已在comment下自定义comment_block
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
@@ -74,7 +74,7 @@ class PostDetailView(CommonViewMixin, DetailView):
             'comment_list': Comment.get_by_target(self.request.path),
         })
         return context
-
+    """
 #增加搜索功能
 class SearchView(IndexView):
     def get_context_data(self):

@@ -1,0 +1,27 @@
+<hr>
+<div>
+    <p style="text-align: center">请评论一波</p>
+    <div class="commnet">
+        <form action="/comment/" method="POST" class="form-group">
+            {% csrf_token %}
+            <input type="hidden" name="target" value="{{ target }}">
+            {{ comment_form }}
+            <button type="submit" class="btn btn-block btn-outline-success" style="margin-top: 10px">提交(2 words at least)</button>
+        </form>
+
+        <!-- 评论列表 -->
+        <ul class="list-group">
+            {% for comment in comment_list %}
+            <li class="list-group-item">
+                <div class="nickname">
+                    <a href="{{ comment.website }}">{{ comment.nickname }}</a>
+                    <span>{{ comment.created_time }}</span>
+                </div>
+                <div class="comment-content">
+                    {{ comment.content }}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
